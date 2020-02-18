@@ -1,0 +1,10 @@
+Bundle-Name: libro-liferay-api
+Bundle-SymbolicName: com.vass.liferay.servicebuilder.libro.api
+Bundle-Version: 1.0.0
+Export-Package:\
+	com.vass.liferay.servicebuilder.libro.exception,\
+	com.vass.liferay.servicebuilder.libro.model,\
+	com.vass.liferay.servicebuilder.libro.service,\
+	com.vass.liferay.servicebuilder.libro.service.persistence
+-check: EXPORTS
+-includeresource: META-INF/service.xml=../libro-liferay-service/service.xml
