@@ -1,0 +1,4 @@
+Bundle-Name: libro-web
+Bundle-SymbolicName: com.vass.liferay.servicebuilder.libro.web
+Bundle-Version: 1.0.0
+Export-Package: com.vass.liferay.servicebuilder.libro.web.constants
