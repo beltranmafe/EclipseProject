@@ -17,11 +17,17 @@
 <liferay-ui:search-container emptyResultsMessage="No has creado todavía ningún escritor.">
     <liferay-ui:search-container-results results="${escritores}"/>
  
-    <liferay-ui:search-container-row className="tutoriales.liferay.crud.libro.model.Escritor" modelVar="escritor">
+    <liferay-ui:search-container-row className="com.vass.liferay.servicebuilder.libro.model.Escritor" modelVar="escritor">
         <liferay-ui:search-container-column-text name="Nombre" property="nombre"/>
         <liferay-ui:search-container-column-jsp name="Acciones" path="/escritorActionButtons.jsp"/>
     </liferay-ui:search-container-row>
  
-    <liferay-ui:search-iterator/>
-    
+    <liferay-ui:search-iterator/>    
 </liferay-ui:search-container>
+
+
+<portlet:resourceURL id="downloadEscritores" var="downloadEscritoresUrl"/>
+
+<aui:button name="downloadEscritoresButton" type="submit" value="Descargar lista de escritores" onClick="<%=downloadEscritoresUrl%>"/>
+
+

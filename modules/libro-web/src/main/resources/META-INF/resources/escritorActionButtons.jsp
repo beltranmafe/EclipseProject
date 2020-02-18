@@ -1,5 +1,4 @@
 <%@ include file="./init.jsp" %>
- 
 <%@ page import="com.liferay.portal.kernel.util.WebKeys" %>
 <%@ page import="com.liferay.taglib.search.ResultRow" %>
 <%@ page import="com.vass.liferay.servicebuilder.libro.model.Escritor" %>
@@ -10,11 +9,12 @@
     final Escritor escritor = (Escritor) row.getObject();
 %>
  
-<portlet:actionURL name="displayEscritorEdition" var="displayEscritorEditionUrl">
-    <portlet:param name="idEscritor" value="<%=String.valueOf(escritor.getEscritorId())%>"/>
-</portlet:actionURL>
+<portlet:renderURL var="displayEscritorEditionUrl">
+    <portlet:param name="mvcRenderCommandName" value="displayEscritorEdition"/>
+    <portlet:param name="idEscritor" value="<%= String.valueOf(escritor.getEscritorId()) %>"/>
+</portlet:renderURL>
 
-<portlet:actionURL name="deleteEscritor" var="deleteEscritorUrl">
+<portlet:actionURL var="deleteEscritorUrl" name="deleteEscritor">
     <portlet:param name="idEscritor" value="<%=String.valueOf(escritor.getEscritorId())%>"/>
 </portlet:actionURL>
  

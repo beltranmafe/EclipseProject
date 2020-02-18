@@ -15,8 +15,17 @@
 package com.vass.liferay.servicebuilder.libro.service.impl;
 
 import com.liferay.portal.aop.AopService;
-
+import com.liferay.portal.kernel.exception.PortalException;
+import com.vass.liferay.servicebuilder.libro.model.Escritor;
+import com.vass.liferay.servicebuilder.libro.model.Libro;
+import com.vass.liferay.servicebuilder.libro.model.impl.LibroImpl;
+import com.vass.liferay.servicebuilder.libro.service.EscritorLocalServiceUtil;
 import com.vass.liferay.servicebuilder.libro.service.base.LibroLocalServiceBaseImpl;
+
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Collection;
+import java.util.Date;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -39,9 +48,33 @@ import org.osgi.service.component.annotations.Component;
 )
 public class LibroLocalServiceImpl extends LibroLocalServiceBaseImpl {
 
-	/*
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never reference this class directly. Use <code>com.vass.liferay.servicebuilder.libro.service.LibroLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>com.vass.liferay.servicebuilder.libro.service.LibroLocalServiceUtil</code>.
-	 */
+    public void addLibro(long groupId, long companyId, long userId, String userName, String titulo, LocalDate publicacion, String genero, Collection<Escritor> escritores) {
+        final Libro libro = new LibroImpl();
+ 
+        libro.setLibroId(counterLocalService.increment());
+        libro.setGroupId(groupId);
+        libro.setCompanyId(companyId);
+        libro.setUserId(userId);
+        libro.setUserName(userName);
+ 
+        libro.setTitulo(titulo);
+        libro.setPublicacion(localDateToDate(publicacion));
+        libro.setGenero(genero);
+ 
+        addLibro(libro);
+ 
+        EscritorLocalServiceUtil.setLibroEscritors(libro.getLibroId(), getEscritorIds(escritores));
+    }
+ 
+    private Date localDateToDate(LocalDate localDate) {
+        return Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
+    }
+ 
+    public void updateLibro(long id, Collection<Escritor> escritores) throws PortalException {
+        EscritorLocalServiceUtil.setLibroEscritors(id, getEscritorIds(escritores));
+    }
+ 
+    private long[] getEscritorIds(Collection<Escritor> escritores) {
+        return escritores.stream().mapToLong(Escritor::getEscritorId).toArray();
+    }
 }
